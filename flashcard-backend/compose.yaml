@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=flashcard_db'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+      - 'TZ=Asia/Ho_Chi_Minh'
+      - 'PGTZ=Asia/Ho_Chi_Minh'
+    ports:
+      - '5432:5432'
