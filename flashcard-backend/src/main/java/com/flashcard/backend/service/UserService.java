@@ -23,23 +23,17 @@ public class UserService {
     }
 
     public User registerUser(RegisterDto registerDto) {
-        // Kiểm tra xem email đã tồn tại chưa
         userRepository.findByEmail(registerDto.getEmail()).ifPresent(u -> {
             throw new IllegalStateException("Email " + u.getEmail() + " đã được sử dụng.");
         });
 
         User user = new User();
-        user.setName(registerDto.getName());
+        user.setUsername(registerDto.getUsername());
         user.setEmail(registerDto.getEmail());
-        // Mã hóa mật khẩu trước khi lưu
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setRole("USER"); // Gán vai trò mặc định
+        user.setPassword_hash(passwordEncoder.encode(registerDto.getPassword()));
+        user.setRole("USER");
 
         return userRepository.save(user);
-    }
-
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
     }
 
     public List<User> getAllUsers() {
@@ -49,7 +43,7 @@ public class UserService {
     public User updateUser(Long id, User userDetails) {
         // Logic to update user
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        user.setName(userDetails.getName());
+        user.setUsername(userDetails.getUsername());
         user.setEmail(userDetails.getEmail());
         // etc. for other fields
         return userRepository.save(user);
@@ -58,4 +52,7 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+
+
 }

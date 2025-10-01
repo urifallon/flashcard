@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,14 +39,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Tắt CSRF cho đơn giản
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/",
-                                "/login",      // Cho phép trang đăng nhập
-                                "/register",   // Cho phép trang đăng ký
-                                "/css/**",     // Cho phép tất cả các tệp trong thư mục css
-                                "/js/**",      // Cho phép tất cả các tệp trong thư mục js
-                                "/api/auth/**" // Cho phép các API xác thực
+                                "/api/auth/register",
+                                "/api/auth/login"// Cho phép các API xác thực
                         ).permitAll()
                         .anyRequest().authenticated() // Tất cả các request khác đều cần xác thực
                 ).sessionManagement(sessionManagement -> sessionManagement
