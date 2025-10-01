@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@ToString(exclude = {"user", "cards", "tags"})
+@ToString(exclude = {"user", "cards", "tags", "studySessionRuns"})
 @Table(name = "folders")
 public class Folder {
 
@@ -59,4 +59,9 @@ public class Folder {
 
     @OneToMany(mappedBy = "folder")
     private List<UserFolderStats> userFolderStats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "folder")
+    private List<StudySessionRun>  studySessionRuns = new ArrayList<>();
+
+
 }

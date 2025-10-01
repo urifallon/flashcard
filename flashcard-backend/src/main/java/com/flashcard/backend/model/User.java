@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@ToString(exclude = {"logs", "folders", "cards", "userCardStats", "userFolderStats"})
+@ToString(exclude = {"logs", "folders", "cards", "userCardStats", "userFolderStats", "studySessionRuns"})
 @Table(name = "users")
 
 public class User implements UserDetails {
@@ -94,5 +94,8 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<UserFolderStats>  userFolderStats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<StudySessionRun>  studySessionRuns = new ArrayList<>();
 
 }
